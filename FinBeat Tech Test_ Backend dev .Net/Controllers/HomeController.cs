@@ -28,23 +28,23 @@ namespace FinBeat_Tech_Test__Backend_dev_.Net.Controllers
             try
             {
                 _logger.Log(LogLevel.Information, "Запрос {0}: {1}", System.Reflection.MethodInfo.GetCurrentMethod().Name, json);
-                var dicArrey = System.Text.Json.JsonSerializer.Deserialize<Dictionary<int, string>[]>(json);
-                List<CodeValueClass> сodeValueArray=new();
-                foreach (var dic in dicArrey)
+                var dicArray = System.Text.Json.JsonSerializer.Deserialize<Dictionary<int, string>[]>(json);
+                List<CodeValueClass> сodeValueList=new();
+                foreach (var dic in dicArray)
                 {
                     foreach (var j in dic)
                     {
-                        сodeValueArray.Add(new CodeValueClass() { Code = j.Key, Value = j.Value });
+                        сodeValueList.Add(new CodeValueClass() { Code = j.Key, Value = j.Value });
                     }
                 }
-                _logger.Log(LogLevel.Information, "Преобразовали {0} в {1}", json, System.Text.Json.JsonSerializer.Serialize(сodeValueArray));
-                if (сodeValueArray.Count > 0)
+                _logger.Log(LogLevel.Information, "Преобразовали {0} в {1}", json, System.Text.Json.JsonSerializer.Serialize(сodeValueList));
+                if (сodeValueList.Count > 0)
                 {
                     using (ApplicationContext db = new ApplicationContext())
                     {
                         db.CodeValueDbSet.RemoveRange(db.CodeValueDbSet);
-                        var orderedCodeValueArray = сodeValueArray.OrderBy(p => p.Code);
-                        foreach (var сodeValue in orderedCodeValueArray)
+                        var orderedсodeValueList = сodeValueList.OrderBy(p => p.Code);
+                        foreach (var сodeValue in orderedсodeValueList)
                         {
                             if (сodeValue != null)
                             {
