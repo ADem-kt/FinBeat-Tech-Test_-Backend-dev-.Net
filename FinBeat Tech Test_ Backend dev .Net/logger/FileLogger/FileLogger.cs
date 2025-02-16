@@ -1,0 +1,46 @@
+﻿using FinBeat_Tech_Test__Backend_dev_.Net.ef;
+
+namespace FinBeat_Tech_Test__Backend_dev_.Net.logger.FileLogger
+{
+    public class FileLogger : ILogger, IDisposable
+    {
+        string filePath;
+        static object _lock = new object();
+        public FileLogger(string path)
+        {
+            filePath = path;
+        }
+        public IDisposable BeginScope<TState>(TState state)
+        {
+            return this;
+        }
+
+        public void Dispose() { }
+
+        public bool IsEnabled(LogLevel logLevel)
+        {
+            //return logLevel == LogLevel.Trace;
+            return true;
+        }
+
+        public void Log<TState>(LogLevel logLevel, EventId eventId,
+                    TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+        {
+            try
+            {
+                lock (_lock)
+                {
+                    File.AppendAllText(filePath, DateTime.Now + ": " + formatter(state, exception) + Environment.NewLine);
+                }
+            }
+            catch (Exception ex)
+            {
+                lock (_lock)
+                {
+                    File.AppendAllText(filePath, ex + Environment.NewLine);
+                }
+            }
+        }
+
+    }
+}
