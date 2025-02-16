@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/FinBeat Tech Test_ Backend dev .Net/appdb.db
+/FinBeat Tech Test_ Backend dev .Net/appdb.db-shm
+/FinBeat Tech Test_ Backend dev .Net/appdb.db-wal
+/FinBeat Tech Test_ Backend dev .Net/logger.txt
