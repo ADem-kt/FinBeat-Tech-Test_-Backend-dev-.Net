@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinBeat Tech Test_ Backend dev .Net", "FinBeat Tech Test_ Backend dev .Net\FinBeat Tech Test_ Backend dev .Net.csproj", "{DC51F673-5BD2-4E09-A6CF-052CB0FE7D1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinBeat Tech Test_ Backend dev .Net", "FinBeat Tech Test_ Backend dev .Net\FinBeat Tech Test_ Backend dev .Net.csproj", "{DC51F673-5BD2-4E09-A6CF-052CB0FE7D1B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{9AA3A072-CF76-4A52-A359-73DC947336E2}"
+	ProjectSection(SolutionItems) = preProject
+		Test_ Backend dev .Net.txt = Test_ Backend dev .Net.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

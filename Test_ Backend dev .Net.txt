@@ -1,0 +1,82 @@
+--Задача 2
+--Даны таблицы:
+--Clients - клиенты
+--(
+--        	Id bigint, -- Id клиента
+--        	ClientName nvarchar(200) -- Наименование клиента
+--);
+--ClientContacts - контакты клиентов
+--(
+--       	Id bigint, -- Id контакта
+--        	ClientId bigint, -- Id клиента
+--        	ContactType nvarchar(255), -- тип контакта
+--        	ContactValue nvarchar(255) --  значение контакта
+--);
+--Написать запрос, который возвращает наименование клиентов и кол-во контактов клиентов
+CREATE table Clients 
+(
+        	Id bigint, -- Id клиента
+        	ClientName nvarchar(200) -- Наименование клиента
+)
+insert into Clients VALUES (1,'qwe'),(2,'wer'),(3,'ert'),(4,'rty'),(5,'tyu')
+
+CREATE TABLE ClientContacts 
+(
+        	Id bigint, -- Id контакта
+        	ClientId bigint, -- Id клиента
+        	ContactType nvarchar(255), -- тип контакта
+        	ContactValue nvarchar(255) --  значение контакта
+)
+insert into ClientContacts VALUES 
+(1,1,'telegram','@qwe'),
+(1,1,'number','89621553214'),
+(2,1,'mail','qwe@mail.ru'),
+(3,2,'number','89621553212'),
+(4,2,'mail','wer@mail.ru'),
+(5,3,'number','89621553216'),
+(6,4,'mail','ert@mail.ru'),
+(7,5,'number','89621553218')
+
+--для SQLite и MSSQL
+select clientname,(select count(clientid) from ClientContacts as cc  WHERE cc.ClientId=c.Id ) as countContact from Clients as c
+
+--Написать запрос, который возвращает список клиентов, у которых есть более 2 контактов
+
+--Для SQLite
+select clientname,(select count(clientid) from ClientContacts as cc  WHERE cc.ClientId=c.Id ) as countContact from Clients as c
+where countContact >2
+--Для MSSQL 
+select clientname,(select count(clientid) from ClientContacts as cc  WHERE cc.ClientId=c.Id )as countContact INTO #tempRes from Clients as c
+select * from #tempRes where countContact>0
+DROP TABLE #tempRes
+
+
+
+--Задача 3 (опционально)
+--Дана таблица:
+--Dates - клиенты
+--(
+--        	Id bigint,
+--        	Dt date
+--);
+--Написать запрос, который возвращает интервалы для одинаковых Id
+create table Dates 
+(
+        	Id bigint,
+        	Dt date
+);
+insert into Dates values 
+(1,'2021-01-01'),
+(1,'2021-01-10'),
+(1,'2021-01-30'),
+(2,'2021-01-15'),
+(2,'2021-01-30')
+
+select *,
+LEAD(Dt) OVER(PARTITION BY Id
+                 ORDER BY Id,Dt) AS nextval
+				 into #TempRes
+FROM Dates
+select * from #TempRes
+where nextval is not null
+Drop table #TempRes
